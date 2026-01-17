@@ -1,10 +1,10 @@
-index.html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>GUARD1N</title>
+
 <style>
 body {
   margin: 0;
@@ -16,67 +16,70 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
+  overflow: hidden;
 }
 
 h1 {
-  margin-bottom: 10px;
-  letter-spacing: 3px;
+  margin-bottom: 20px;
+  letter-spacing: 4px;
+  font-size: 26px;
 }
 
 #goal {
-  width: 300px;
+  width: 320px;
   height: 200px;
-  border: 3px solid white;
+  border: 3px solid #fff;
   position: relative;
   touch-action: none;
 }
 
-.zone {
-  position: absolute;
-  border: 1px solid rgba(255,255,255,0.3);
-}
-
-#log {
-  margin-top: 15px;
-  font-size: 16px;
+#feedback {
+  margin-top: 20px;
+  font-size: 18px;
+  letter-spacing: 1px;
 }
 </style>
 </head>
+
 <body>
 
 <h1>GUARD1N</h1>
+
 <div id="goal"></div>
-<div id="log">Deslize no gol</div>
+
+<div id="feedback">Deslize para registrar</div>
 
 <script>
 const goal = document.getElementById("goal");
-const log = document.getElementById("log");
+const feedback = document.getElementById("feedback");
 
 let startX = 0;
 let startY = 0;
 
 goal.addEventListener("touchstart", e => {
+  e.preventDefault();
   startX = e.touches[0].clientX;
   startY = e.touches[0].clientY;
-});
+}, { passive: false });
 
 goal.addEventListener("touchend", e => {
-  let endX = e.changedTouches[0].clientX;
-  let endY = e.changedTouches[0].clientY;
+  e.preventDefault();
+  const endX = e.changedTouches[0].clientX;
+  const endY = e.changedTouches[0].clientY;
 
-  let dx = endX - startX;
-  let dy = endY - startY;
+  const dx = endX - startX;
+  const dy = endY - startY;
 
-  let direction = "Centro";
+  let result = "Centro";
 
   if (Math.abs(dx) > Math.abs(dy)) {
-    direction = dx > 0 ? "Direita" : "Esquerda";
+    result = dx > 0 ? "Direita" : "Esquerda";
   } else {
-    direction = dy > 0 ? "Baixo" : "Alto";
+    result = dy > 0 ? "Baixo" : "Alto";
   }
 
-  log.innerText = "Arremesso: " + direction;
-});
+  feedback.innerText = "Arremesso: " + result;
+}, { passive: false });
 </script>
 
 </body>
