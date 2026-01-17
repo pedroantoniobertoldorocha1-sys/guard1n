@@ -1,1 +1,83 @@
+index.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUARD1N</title>
+<style>
+body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
 
+h1 {
+  margin-bottom: 10px;
+  letter-spacing: 3px;
+}
+
+#goal {
+  width: 300px;
+  height: 200px;
+  border: 3px solid white;
+  position: relative;
+  touch-action: none;
+}
+
+.zone {
+  position: absolute;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+#log {
+  margin-top: 15px;
+  font-size: 16px;
+}
+</style>
+</head>
+<body>
+
+<h1>GUARD1N</h1>
+<div id="goal"></div>
+<div id="log">Deslize no gol</div>
+
+<script>
+const goal = document.getElementById("goal");
+const log = document.getElementById("log");
+
+let startX = 0;
+let startY = 0;
+
+goal.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+});
+
+goal.addEventListener("touchend", e => {
+  let endX = e.changedTouches[0].clientX;
+  let endY = e.changedTouches[0].clientY;
+
+  let dx = endX - startX;
+  let dy = endY - startY;
+
+  let direction = "Centro";
+
+  if (Math.abs(dx) > Math.abs(dy)) {
+    direction = dx > 0 ? "Direita" : "Esquerda";
+  } else {
+    direction = dy > 0 ? "Baixo" : "Alto";
+  }
+
+  log.innerText = "Arremesso: " + direction;
+});
+</script>
+
+</body>
+</html>
